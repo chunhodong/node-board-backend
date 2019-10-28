@@ -4,9 +4,14 @@ const session = require('express-session');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const flash = require('connect-flash');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const pageRouter = require('./routes/page');
+const authRouter = require('./routes/auth');
+
+const passport = require('passport');
+const passportConfig = require('./passport');
+passportConfig(passport);
 //.env 파일을 읽어서 process.env 객체에 속성추가
 require('dotenv').config();
 
@@ -21,6 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(session({
   resave:false,
   saveUninitialized:false,
@@ -30,9 +36,12 @@ app.use(session({
     secure:false,
   },
 }));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', pageRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
