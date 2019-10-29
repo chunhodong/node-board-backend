@@ -1,27 +1,30 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
-
-//const {User} = require('../models');
-
-module.exports = (passport) =>{
+const User = require('../models/user');
+module.exports = (passport) => {
     passport.use(new LocalStrategy({
-        usernameField:'email',
-        passwordField:'password',
+        usernameField: 'email',
+        passwordField: 'password',
         //done => passport.authenticate의 콜백함수
-    }, async(email,password,done) =>{
-        try{
+    }, async (email, password, done) => {
+        try {
+            const user = {email,password};
+            const exUser = await User.findUserOne(user);
+            console.log('login strategy exUser : ',exUser);
+            
+            if(exUser.length == 0){
+                done(null,false,{message:'존재하지 않는 유저입니다.'});
+            }
+            //존재하는 유저
+            const result = await bcrypt.compare(use.password,exUser.password);
+            if(result){
+                done(null,exUser);
+            }
+            else{
+                done(null,false,{message:'비밀번호가 일치하지 않습니다.'})
 
-           // 유저찾기
-           //if(exUser){
-           // const exUser = await
-           // 존재한다면 비밀번호를 비교
-           //결과가 존재한다면 done(null,exUser);
-           //아니면 done(null,false,{});
-           //}
-           //else{
-               //유저가 없다.
-           //}
-        }catch(error){
+            }
+        } catch (error) {
             console.error(error);
             done(error);
         }
