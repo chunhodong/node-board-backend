@@ -4,7 +4,7 @@ block content
   .timeline
     if user
       div
-        form#twit-form(action='/post' method='post' enctype='multipart/form-data')
+        form#twit-form(action='/post' method='post')
           .input-group
             textarea#twit(name='content' maxlength=140)
           .img-preview
@@ -20,13 +20,17 @@ block content
         button.btn 검색
       for twit in twits
         .twit
-          input.twit-user-id(type='hidden' value=twit.user.id)
+          input.twit-user-id(type='hidden' value=twit.userid)
           input.twit-id(type='hidden' value=twit.id)
-          .twit-author= twit.user.nick
-          -const follow = user && user.Followings.map(f => f.id).includes(twit.user.id);
-          if user && user.id !== twit.user.id && !follow
-            button.twit-follow 팔로우하기
+          .twit-author= twit.nick
+          //팔로잉부분
+          // -const follow = user && user.Followings.map(f => f.id).includes(twit.userid);
+          //if user && user.id !== twit.user.id && !follow
+          //  button.twit-follow 팔로우하기
+            
+
           .twit-content= twit.content
+          
           if twit.img
             .twit-img
               img(src=twit.img alt='섬네일')

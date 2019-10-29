@@ -5,20 +5,20 @@ module.exports = (passport) => {
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
-        //done => passport.authenticate의 콜백함수
     }, async (email, password, done) => {
         try {
             const user = {email,password};
-            const exUser = await User.findUserOne(user);
-            console.log('login strategy exUser : ',exUser);
+            const exUser = await User.findUserByEmail(user);
             
+            //존재하지 않는 유저
             if(exUser.length == 0){
                 done(null,false,{message:'존재하지 않는 유저입니다.'});
             }
-            //존재하는 유저
-            const result = await bcrypt.compare(use.password,exUser.password);
+            
+            //비밀번호 비교
+            const result = await bcrypt.compare(user.password,exUser[0].password);
             if(result){
-                done(null,exUser);
+                done(null,exUser[0]);
             }
             else{
                 done(null,false,{message:'비밀번호가 일치하지 않습니다.'})

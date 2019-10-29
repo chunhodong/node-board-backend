@@ -9,15 +9,13 @@ module.exports = (passport) => {
     });
 
     //serializeUser에서 받은 id를 가지고,req객체에 저장
-    passport.deserializeUser((email,done)=>{
+    passport.deserializeUser(async (email,done)=>{
         //유저검색
         //db.find => done(user)
-        
-        const user = {email}; 
-        User.findUserOne(user)
-        .then(exUser => done(null,exUser))
-        .catch(err=>done(err));
-        
+        const exUser = await User.findUserByEmail({email});
+        done(null,exUser[0]);
+
+
     });
 
     local(passport);

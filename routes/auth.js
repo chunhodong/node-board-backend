@@ -11,7 +11,7 @@ router.post('/join', isNotLoggedIn, async (req, res) => {
     try {
 
         //유저찾기
-        const exUser = await User.findUserOne(user);
+        const exUser = await User.findUserByEmail(user);
         console.log('result = ',exUser);
         if (!exUser) {
             req.flash('joinError', '시스템 에러발생');

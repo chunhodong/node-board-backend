@@ -8,7 +8,7 @@ const flash = require('connect-flash');
 
 const pageRouter = require('./routes/page');
 const authRouter = require('./routes/auth');
-
+const postRouter = require('./routes/post');
 const passport = require('passport');
 const passportConfig = require('./passport');
 passportConfig(passport);
@@ -42,6 +42,7 @@ app.use(passport.session());
 
 app.use('/', pageRouter);
 app.use('/auth', authRouter);
+app.use('/post',postRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
