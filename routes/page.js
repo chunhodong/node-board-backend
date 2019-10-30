@@ -13,7 +13,6 @@ router.get('/join',isNotLoggedIn,(req,res)=>{
 
 router.get('/',async(req,res)=>{
     const posts = await Post.findPostAll(req.user);
-    console.log('main posts = ',posts);
     res.render('main',{title:'NodeBird',twits:posts,user:req.user,loginError:req.flash('loginError')});
 });
 

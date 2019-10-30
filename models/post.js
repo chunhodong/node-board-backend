@@ -1,20 +1,24 @@
 const db = require('./common');
 
+//게시물저장
 const createPostOne = async (post) => {
     try {
-        const query = "INSERT INTO posts(content,user) VALUES(?,?)";
+        const query = "INSERT INTO posts(content,img,userid) VALUES(?,?,?)";
         const connection = await db.getConnection(async conn => conn);
-        const [rows] = await connection.query(query, [post.content, post.user]);
+        const [rows] = await connection.query(query, [post.content,post.img,post.user]);
         await connection.commit();
         connection.release();
         console.log('post rows = ', rows);
+        
         return rows;
+        
     } catch (error) {
         console.log("error = ", error);
         return false;
     }
 }
 
+//해시태그 저장
 const createHashTag = async (tag) => {
     try {
         const query = "INSERT INTO hashtag(title) VALUES(?)";
@@ -30,6 +34,7 @@ const createHashTag = async (tag) => {
     }
 };
 
+//게시물-해시태그 관계저장
 const createPostToHashTag = async (postid, tagid) => {
     try {
         const query = "INSERT INTO posthashtag(postid,hashtagid) VALUES(?,?)";
@@ -45,6 +50,7 @@ const createPostToHashTag = async (postid, tagid) => {
     }
 };
 
+//모든 게시물검색
 const findPostAll = async (user) => {
     try {
         const query = "SELECT users.*,posts.* FROM users,posts WHERE users.id = posts.userid AND users.id = ?";
