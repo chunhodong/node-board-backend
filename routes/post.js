@@ -60,4 +60,22 @@ router.post('/hashtag', isLoggedIn, async (req, res, next) => {
         next(error);
     }
 });
+
+router.get('/hashtag', isLoggedIn, async (req, res, next) => {
+    try {
+        //포스트저장
+        console.log('keyworkd = ',req.query.hashtag);
+        console.log('userid = ',req.user);
+        //해쉬태그 아이디찾기
+        const posts = await Post.findPostAllByHashTag(req.user,req.query.hashtag);
+        console.log('search result = ',posts);
+        res.render('main',{title:'NodeBird',twits:posts,user:req.user,loginError:req.flash('loginError')});
+
+        //해쉬태그 아이디와연결된 게시물찾기
+        //게시물리턴
+    
+    } catch (error) {
+        next(error);
+    }
+});
 module.exports = router;

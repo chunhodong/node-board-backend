@@ -5,13 +5,13 @@ const createPostOne = async (post) => {
     try {
         const query = "INSERT INTO posts(content,img,userid) VALUES(?,?,?)";
         const connection = await db.getConnection(async conn => conn);
-        const [rows] = await connection.query(query, [post.content,post.img,post.user]);
+        const [rows] = await connection.query(query, [post.content, post.img, post.user]);
         await connection.commit();
         connection.release();
         console.log('post rows = ', rows);
-        
+
         return rows;
-        
+
     } catch (error) {
         console.log("error = ", error);
         return false;
@@ -63,7 +63,21 @@ const findPostAll = async (user) => {
     }
 };
 
+const findPostAllByHashTag = async (user, hashtag) => {
+    try {
+        const query = 'SELECT users.*,posts.* FROM hashtag,posthashtag,posts,users WHERE hashtag.title = ?' +
+            'AND hashtag.id = posthashtag.hashtagid AND posthashtag.postid = posts.id AND users.id = ?';
+        const connection = await db.getConnection(async conn => conn);
+        const [rows] = await connection.query(query, ['#'+hashtag, user.id]);
+        connection.release();
+        return rows;
+    } catch (error) {
+        return [];
+    }
+};
+
 module.exports.createPostOne = createPostOne;
 module.exports.createHashTag = createHashTag;
 module.exports.createPostToHashTag = createPostToHashTag;
 module.exports.findPostAll = findPostAll;
+module.exports.findPostAllByHashTag = findPostAllByHashTag;
