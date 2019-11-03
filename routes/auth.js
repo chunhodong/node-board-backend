@@ -24,6 +24,7 @@ router.post('/join', isNotLoggedIn, async (req, res) => {
 
         const hash = await bcrypt.hash(user.password, 12);
         user.password = hash;
+        user.provider = 'local';
         await User.createUserOne(user);
         return res.redirect('/');
 
@@ -65,5 +66,16 @@ router.post('/logout', isLoggedIn, (req, res) => {
     res.session.destory();
     res.redirect('/');
 });
+
+
+//카카오톡 로그인창을 띄워줌
+router.get('/kakao',passport.authenticate('kakao'));
+
+//로그인결과를 callback으로 받음
+router.get('/kakao/callback',passport.authenticate('kakao',{
+    failureRedirect:'/',
+}),(req,res)=>{
+    res.redirect('/');
+})
 
 module.exports = router;

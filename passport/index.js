@@ -1,6 +1,6 @@
 const local = require('./localStrategy');
+const kakao = require('./kakaoStrategy');
 const User = require('../models/user');
-//const {User} = require('../models');
 
 module.exports = (passport) => {
     //req.session객체에 user.id를 저장
@@ -19,4 +19,5 @@ module.exports = (passport) => {
     });
 
     local(passport);
+    kakao(passport);
 };
