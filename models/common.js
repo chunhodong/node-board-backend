@@ -2,9 +2,7 @@ const mysql = require('mysql2/promise');
 const db_config = require('../config/config.json');
 
 
-
-console.log('mysql pool');
-
+console.log('mysql pool master');
 
 module.exports = mysql.createPool({
             host: db_config.host,
