@@ -1,6 +1,8 @@
 const mysql = require('mysql2/promise');
 const db_config = require('../config/config.json');
 
+console.log('remote branch');
+
 module.exports = mysql.createPool({
             host: db_config.host,
             port: db_config.port,
