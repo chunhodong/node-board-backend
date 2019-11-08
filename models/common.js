@@ -4,7 +4,7 @@ const db_config = require('../config/config.json');
 
 console.log('mysql pool master');
 console.log('mysql pool branch');
-
+console.log('mysql pool branch-1');
 
 module.exports = mysql.createPool({
             host: db_config.host,
