@@ -3,6 +3,8 @@ const db_config = require('../config/config.json');
 
 
 console.log('mysql pool master');
+console.log('mysql pool branch');
+
 
 module.exports = mysql.createPool({
             host: db_config.host,
