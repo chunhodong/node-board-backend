@@ -12,6 +12,10 @@ const postRouter = require('./routes/post');
 const passport = require('passport');
 const passportConfig = require('./passport');
 passportConfig(passport);
+
+const schedule = require('node-cron');
+const moment = require('moment');
+
 //.env 파일을 읽어서 process.env 객체에 속성추가
 require('dotenv').config();
 
@@ -37,6 +41,9 @@ app.use(session({
     secure:false,
   },
 }));
+
+console.log('node-board~~');
+
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());

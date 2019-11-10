@@ -68,7 +68,7 @@ const createPostToHashTag = async (postid, tagid) => {
 //모든 게시물검색
 const findPostAll = async (user) => {
     try {
-        const query = "SELECT users.*,posts.* FROM users,posts WHERE users.id = posts.userid AND users.id = ?";
+        const query = "SELECT member.*,posts.* FROM member,posts WHERE member.id = posts.userid AND member.id = ?";
         const connection = await db.getConnection(async conn => conn);
         const [rows] = await connection.query(query, [user.id]);
         connection.release();
@@ -80,8 +80,8 @@ const findPostAll = async (user) => {
 
 const findPostAllByHashTag = async (user, hashtag) => {
     try {
-        const query = 'SELECT users.*,posts.* FROM hashtag,posthashtag,posts,users WHERE hashtag.title = ?' +
-            'AND hashtag.id = posthashtag.hashtagid AND posthashtag.postid = posts.id AND users.id = ?';
+        const query = 'SELECT member.*,posts.* FROM hashtag,posthashtag,posts,member WHERE hashtag.title = ?' +
+            'AND hashtag.id = posthashtag.hashtagid AND posthashtag.postid = posts.id AND member.id = ?';
         const connection = await db.getConnection(async conn => conn);
         const [rows] = await connection.query(query, ['#' + hashtag, user.id]);
         connection.release();
