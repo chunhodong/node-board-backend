@@ -77,7 +77,6 @@ function onError(error) {
   }
 }
 
-console.log('schedule..');
 /**
  * Event listener for HTTP server "listening" event.
  */

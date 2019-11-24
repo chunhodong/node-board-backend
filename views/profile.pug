@@ -4,7 +4,7 @@ block content
   .timeline
     .followings.half
       h2 팔로잉 목록
-      if user.Followings
+  //    if user.Followings
         for following in user.Followings
           div= following.nick
     .followers.half

@@ -42,6 +42,7 @@ router.post('/login', isNotLoggedIn, (req, res,next) => {
     passport.authenticate('local', (authError, user, info) => {
     
         if (authError) {
+            console.log('authError');
             console.error(authError);
             return next(authError);
         }
@@ -61,9 +62,8 @@ router.post('/login', isNotLoggedIn, (req, res,next) => {
 });
 
 //로그아웃
-router.post('/logout', isLoggedIn, (req, res) => {
+router.get('/logout', isLoggedIn, (req, res) => {
     req.logout();
-    res.session.destory();
     res.redirect('/');
 });
 

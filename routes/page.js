@@ -4,7 +4,7 @@ const {isLoggedIn,isNotLoggedIn} = require('./middlewares');
 const Post = require('../models/post');
 
 router.get('/profile',isLoggedIn,(req,res)=>{
-    res.render('profile',{title:'내정보',user:null});
+    res.render('profile',{title:'내정보',user:req.user});
 });
 
 router.get('/join',isNotLoggedIn,(req,res)=>{

@@ -42,7 +42,6 @@ app.use(session({
   },
 }));
 
-console.log('node-board~~');
 
 app.use(flash());
 app.use(passport.initialize());
