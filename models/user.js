@@ -1,5 +1,19 @@
 const db = require('./common');
 
+const findUserOne = async (user) =>{
+    try {
+        const query = "SELECT * FROM member WHERE email = ? AND password = ?";
+        const connection = await db.getConnection(async conn => conn);
+        const [rows] = await connection.query(query, [user.email,user.password]);
+        connection.release();
+        return rows;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+
+}
+
 //이메일로 유저검색
 const findUserByEmail = async (user) => {
     try {
@@ -72,4 +86,4 @@ module.exports.findUserByEmail = findUserByEmail;
 module.exports.findUserById = findUserById;
 module.exports.findUserBySns = findUserBySns;
 module.exports.createUserOne = createUserOne;
-
+module.exports.findUserOne = findUserOne;

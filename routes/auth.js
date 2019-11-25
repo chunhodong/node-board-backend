@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 //회원가입
 router.post('/join', isNotLoggedIn, async (req, res) => {
@@ -37,28 +38,38 @@ router.post('/join', isNotLoggedIn, async (req, res) => {
 });
 
 //로그인
-router.post('/login', isNotLoggedIn, (req, res,next) => {
+router.post('/login', async (req, res,next) => {
+    try {
+        const user = await User.findUserOne(req.body);
 
-    passport.authenticate('local', (authError, user, info) => {
-    
-        if (authError) {
-            console.log('authError');
-            console.error(authError);
-            return next(authError);
+        if(!user){
+            return res.json({
+                code:401,
+                message:'등록되지 않은 사용자입니다.'
+            })
         }
-        if (!user) {
-            req.flash('loginError', info.message);
-            return res.redirect('/');
-        }
-        return req.logIn(user, (loginError) => {
-            if (loginError) {
-                return next(loginError);
-            }
-            return res.redirect('/');
+        const token = jwt.sign({
+            id: user[0].email,
+            nick: user[0].nick
+        }, process.env.JWT_SECRET, {
+            expiresIn: '1m',
+            issuer: 'nodebird'
+        })
+
+        return res.json({
+            code: 200,
+            message: '토큰이 발급되었습니다',
+            token
+        })
+    } 
+    catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            code:500,
+            message:'서버 에러'
         });
-
-    })(req, res,next);
-
+    }
+ 
 });
 
 //로그아웃
