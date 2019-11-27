@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const router = express.Router();
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn,verifyToken} = require('./middlewares');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
@@ -49,10 +49,11 @@ router.post('/login', async (req, res,next) => {
             })
         }
         const token = jwt.sign({
-            id: user[0].email,
+            id :user[0].id,
+            email: user[0].email,
             nick: user[0].nick
         }, process.env.JWT_SECRET, {
-            expiresIn: '1m',
+            expiresIn: '60m',
             issuer: 'nodebird'
         })
 
@@ -71,6 +72,15 @@ router.post('/login', async (req, res,next) => {
     }
  
 });
+
+
+router.post('/token',verifyToken,async(req,res,next)=>{
+    return res.status(200).json({
+        code:200,
+        message:'유효한 토큰입니다.'
+    });
+});
+
 
 //로그아웃
 router.get('/logout', isLoggedIn, (req, res) => {

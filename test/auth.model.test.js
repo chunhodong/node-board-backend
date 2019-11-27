@@ -1,6 +1,7 @@
 const User = require('../models/user');
+const Post = require('../models/post');
 
-describe.only('userFindOne',()=>{
+describe('userFindOne',()=>{
     describe('성공시',()=>{
         
         it('user object=>',async ()=>{
@@ -9,4 +10,28 @@ describe.only('userFindOne',()=>{
         })
 
     });
+});
+
+describe.only('createPostOne',()=>{
+    describe('성공시',()=>{
+        beforeEach(()=>{
+            
+        })
+        it('post object=>',async ()=>{
+            const user = await Post.createPostOne({title:'admin',content:'admin',img:'',user:11});
+            console.log(user);
+        })
+
+        afterEach(async ()=>{
+            const result = await Post.deletePostOne(11);
+            console.log(result);
+        })
+
+
+
+    });
+});
+
+describe('deletePostOne',()=>{
+
 });

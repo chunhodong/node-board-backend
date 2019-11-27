@@ -4,7 +4,7 @@ const path = require('path');
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const Post = require('../models/post');
-const fs = require('fs');
+const {verifyToken} = require('./middlewares');
 
 
 
@@ -26,36 +26,43 @@ router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     res.json({ url: `/img/${req.file.filename}` });
 });
 const upload2 = multer();
-router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
+
+router.post('/create',verifyToken,async (req, res, next) => {
     try {
-        //포스트저장
-        const post = await Post.createPostOne({ content: req.body.content, img: req.body.url, user: req.user.id });
-        const srcHashTag = req.body.content.match(/#[^\s#]*/g);
-        //해쉬태그저장
-        if (srcHashTag) {
-            const tmpHashTag = await Promise.all(srcHashTag.map(tag => Post.checkDupTag(tag)));
-
-            const destHashTag = await Promise.all(tmpHashTag.map(async tag => {
-                if (typeof tag === 'string') {
-                    const insertItem = await Post.createHashTag(tag);
-                    return insertItem.insertId;
-                }
-                else{
-                    return tag;
-                }
-            }
-            ));
-            
-
-            
-            //const result = await Promise.all(destHashTag.map(tag => Post.createHashTag(tag)));
-            
-            await Promise.all(destHashTag.map(item => Post.createPostToHashTag(post.insertId, item)));
-            
-        }
-        res.redirect('/');
+        console.log('user post : ',req.body);
+        console.log('user post : ',req);
+        
+        await Post.createPostOne({title:req.body.article_title ,content: req.body.article_content, img:  req.body.article_img, user: req.decoded.id});
+     
+        return res.status(200).json({
+            code:200,
+            message:'게시물이 등록되었습니다.'
+        });
     } catch (error) {
-        next(error);
+        console.log(error);
+        return res.status(500).json({
+            code:500,
+            message:'서버 에러'
+        });
+
+    }
+});
+
+router.post('/delete',verifyToken,async (req, res, next) => {
+    try {
+        
+        await Post.deletePostOne(req.body.id);
+        return res.status(200).json({
+            code:200,
+            message:'게시물이 삭제되었습니다.'
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            code:500,
+            message:'서버 에러'
+        });
+
     }
 });
 

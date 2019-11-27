@@ -3,18 +3,31 @@ const db = require('./common');
 //게시물저장
 const createPostOne = async (post) => {
     try {
-        const query = "INSERT INTO posts(content,img,userid) VALUES(?,?,?)";
+        const query = "INSERT INTO posts(title,content,img,userid) VALUES(?,?,?,?)";
         const connection = await db.getConnection(async conn => conn);
-        const [rows] = await connection.query(query, [post.content, post.img, post.user]);
+        const [rows] = await connection.query(query, [post.title,post.content, post.img, post.user]);
         await connection.commit();
         connection.release();
-        console.log('post rows = ', rows);
-
         return rows;
-
     } catch (error) {
-        console.log("error = ", error);
-        return false;
+        console.error(error);
+        throw error;
+    }
+}
+
+
+const deletePostOne = async(id) =>{
+    try{
+        const query = "DELETE FROM posts WHERE userid = ?";
+        const connection = await db.getConnection(async conn => conn);
+        const [rows] = await connection.query(query,[id]);
+        await connection.commit();
+        connection.release();
+        return rows;
+    }
+    catch(error){
+        console.error(error);
+        throw error;
     }
 }
 
@@ -28,19 +41,17 @@ const createHashTag = async (tag) => {
         connection.release();
         return rows;
     } catch (error) {
-        console.log("error = ", error);
 
         return false;
     }
 };
+
 
 const checkDupTag = async (tag) => {
     try {
         const query = "SELECT *,count(*) as cnt FROM hashtag WHERE title = ?";
         const connection = await db.getConnection(async conn => conn);
         const [result] = await connection.query(query, [tag]);
-        console.log("check result = ",result[0]);
-        console.log("check result = ",result[0].cnt);
 
         return result[0].cnt == 0 ? tag : result[0].id;
 
@@ -97,3 +108,4 @@ module.exports.createPostToHashTag = createPostToHashTag;
 module.exports.findPostAll = findPostAll;
 module.exports.findPostAllByHashTag = findPostAllByHashTag;
 module.exports.checkDupTag = checkDupTag;
+module.exports.deletePostOne = deletePostOne;
