@@ -2,30 +2,33 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const router = express.Router();
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const Post = require('../models/post');
-const {verifyToken} = require('./middlewares');
+const {verifyToken,isLoggedIn,isNotLoggedIn} = require('./middlewares');
+const AWS = require('aws-sdk');
+const multerS3 = require('multer-s3');
 
-
+AWS.config.update({
+    accessKeyId:'AKIAJGLX6E2LOUVSXNBA',
+    secretAccessKey:'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',
+    region:'ap-northeast-2',
+});
 
 const upload = multer({
-    storage: multer.diskStorage({
-        destination(req, file, cb) {
-            cb(null, 'uploads/');
+    storage:multerS3({
+        s3:new AWS.S3(),
+        bucket:'node-board',
+        key(req,file,cb){
+            console.log('file....',file);
+            cb(null,`original/${+new Date()}_${path.basename(file.originalname)}`);
         },
-        filename(req, file, cb) {
-            const ext = path.extname(file.originalname);
-            cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
-        },
-
     }),
-    limits: { fileSize: 5 * 1024 * 1024 },
-});
-router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
+    limits:{fileSize:5*1024*1024},
+})
+
+router.post('/img', upload.single('img'), (req, res) => {
     console.log(req.file);
     res.json({ url: `/img/${req.file.filename}` });
 });
-const upload2 = multer();
 
 router.post('/create',verifyToken,async (req, res, next) => {
     try {

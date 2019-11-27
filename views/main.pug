@@ -2,7 +2,7 @@ extends layout
 
 block content
   .timeline
-    if user
+
       div
         form#twit-form(action='/post' method='post')
           .input-group
@@ -14,37 +14,20 @@ block content
             label#img-label(for='img') 사진 업로드
             input#img(type='file' accept='image/*')
             button#twit-btn.btn(type='submit') 업로드
-    .twits
 
 
-      form#hashtag-form(action='/post/hashtag')
-        input(type='text' name='hashtag' placeholder='태그 검색')
-        button.btn 검색
-        
-      for twit in twits
-        .twit
-          input.twit-user-id(type='hidden' value=twit.userid)
-          input.twit-id(type='hidden' value=twit.id)
-          .twit-author= twit.nick
-          //팔로잉부분
-          // -const follow = user && user.Followings.map(f => f.id).includes(twit.userid);
-          //if user && user.id !== twit.user.id && !follow
-          //  button.twit-follow 팔로우하기
-            
 
-          .twit-content= twit.content
-          
-          if twit.img
-            .twit-img
-              img(src=twit.img alt='섬네일')
   script.
     if (document.getElementById('img')) {
       document.getElementById('img').addEventListener('change', function (e) {
+        console.log('img change!!!');
+        
         var formData = new FormData();
         console.log(this, this.files);
         formData.append('img', this.files[0]);
         var xhr = new XMLHttpRequest();
         xhr.onload = function () {
+          console.log('response...',xhr);
           if (xhr.status === 200) {
             var url = JSON.parse(xhr.responseText).url;
             document.getElementById('img-url').value = url;

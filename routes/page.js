@@ -12,8 +12,9 @@ router.get('/join',isNotLoggedIn,(req,res)=>{
 });
 
 router.get('/',async(req,res)=>{
-    const posts = await Post.findPostAll(req.user);
-    res.render('main',{title:'NodeBird',twits:posts,user:req.user,loginError:req.flash('loginError')});
+  //  const posts = await Post.findPostAll(req.user);
+  console.log('gawegwagawg');
+    res.render('main',{});
 });
 
 module.exports = router;
