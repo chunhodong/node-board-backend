@@ -21,9 +21,8 @@ describe('post /auth/login',()=>{
         
     });
 });
-//jest.mock('../routes/middlewares');
 
-describe.only('post /post/create',()=>{
+describe('post /post/create',()=>{
     
     describe('성공시',()=>{
 
@@ -68,3 +67,37 @@ describe.only('post /post/create',()=>{
         
     });
 });
+
+
+describe.only('post /post/readAll',()=>{
+    
+    describe('성공시',()=>{
+
+        beforeEach(()=>{
+            /*
+            testSession = session(app,{
+                before:(req)=>{
+                    req.set('token',{token_id:25});
+                },
+            });
+            */
+            
+        });
+        it('response=>json token',(done)=>{
+            request(app)
+          //  testSession
+
+            .get('/post/readAll')
+            .end((err,res)=>{
+                
+                console.log(res.body);
+                done();
+            });
+        });
+        afterEach(()=>{
+          
+        });
+        
+    });
+});
+

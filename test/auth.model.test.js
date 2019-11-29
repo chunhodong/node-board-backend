@@ -12,7 +12,7 @@ describe('userFindOne',()=>{
     });
 });
 
-describe.only('createPostOne',()=>{
+describe('createPostOne',()=>{
     describe('성공시',()=>{
         beforeEach(()=>{
             
@@ -32,6 +32,9 @@ describe.only('createPostOne',()=>{
     });
 });
 
-describe('deletePostOne',()=>{
-
+describe.only('selectPostAll',()=>{
+    it('post object=>',async ()=>{
+        const result = await Post.selectPostAll();
+        console.log(result);
+    })
 });
