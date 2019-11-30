@@ -69,7 +69,7 @@ describe('post /post/create',()=>{
 });
 
 
-describe.only('post /post/readAll',()=>{
+describe('post /post/readAll',()=>{
     
     describe('성공시',()=>{
 
@@ -101,3 +101,32 @@ describe.only('post /post/readAll',()=>{
     });
 });
 
+
+describe.only('post /post/readOne',()=>{
+    
+    describe('성공시',()=>{
+
+        beforeEach(()=>{
+            /*
+            testSession = session(app,{
+                before:(req)=>{
+                    req.set('token',{token_id:25});
+                },
+            });
+            */
+            
+        });
+        it('response=>json token',(done)=>{
+            request(app)
+            .get('/post/readOne?articleId=-1')
+            .end((err,res)=>{
+                console.log(res.body);
+                done();
+            });
+        });
+        afterEach(()=>{
+          
+        });
+        
+    });
+});

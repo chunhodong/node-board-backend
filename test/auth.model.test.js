@@ -32,9 +32,17 @@ describe('createPostOne',()=>{
     });
 });
 
-describe.only('selectPostAll',()=>{
+describe('selectPostAll',()=>{
     it('post object=>',async ()=>{
         const result = await Post.selectPostAll();
         console.log(result);
     })
 });
+
+describe.only('selectPostOne',()=>{
+    it('post object=>',async ()=>{
+        const result = await Post.selectPostOne({articleId:1});
+        console.log(result);
+    })
+});
+
