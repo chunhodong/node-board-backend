@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require('../app');
 const session = require('supertest-session');
 const jwt = require('jsonwebtoken');
+jest.mock('jsonwebtoken');
 
 let testSession;
 
@@ -102,7 +103,7 @@ describe('post /post/readAll',()=>{
 });
 
 
-describe.only('post /post/readOne',()=>{
+describe('post /post/readOne',()=>{
     
     describe('성공시',()=>{
 
@@ -119,6 +120,38 @@ describe.only('post /post/readOne',()=>{
         it('response=>json token',(done)=>{
             request(app)
             .get('/post/readOne?articleId=-1')
+            .end((err,res)=>{
+                console.log(res.body);
+                done();
+            });
+        });
+        afterEach(()=>{
+          
+        });
+        
+    });
+});
+
+describe.only('get /member/MmeberOne',()=>{
+    
+    describe('성공시',()=>{
+
+        beforeEach(()=>{
+            /*
+            testSession = session(app,{
+                before:(req)=>{
+                    req.set('token',{token_id:25});
+                },
+            });
+            */
+           
+           jwt.verify.mockClear();
+           jwt.verify.mockReturnValue({id:2});
+            
+        });
+        it('response=>json token',(done)=>{
+            request(app)
+            .get('/member/readOne')
             .end((err,res)=>{
                 console.log(res.body);
                 done();
