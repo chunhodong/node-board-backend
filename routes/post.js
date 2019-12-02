@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const router = express.Router();
 const Post = require('../models/post');
-const { verifyToken, isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { verifyToken} = require('./middlewares');
 const AWS = require('aws-sdk');
 const multerS3 = require('multer-s3');
 

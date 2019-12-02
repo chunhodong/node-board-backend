@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const Member = require('../models/member');
 
 describe('userFindOne',()=>{
     describe('성공시',()=>{
@@ -39,9 +40,16 @@ describe('selectPostAll',()=>{
     })
 });
 
-describe.only('selectPostOne',()=>{
+describe('selectPostOne',()=>{
     it('post object=>',async ()=>{
         const result = await Post.selectPostOne({articleId:1});
+        console.log(result);
+    })
+});
+
+describe.only('selectMemberOne',()=>{
+    it('member object=>',async ()=>{
+        const result = await Member.selectMemberOne({id:2});
         console.log(result);
     })
 });
