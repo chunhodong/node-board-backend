@@ -47,4 +47,28 @@ router.get('/readOne', verifyToken, async (req, res, next) => {
 
     }
 });
+
+router.post('/modify', verifyToken, upload.single('img'), async (req, res, next) => {
+    try {
+        const member_img = req.file === undefined ? req.body.member_img : req.file.location;
+
+        await Member.updateMember({ email: req.body.member_email, nick: req.body.member_nick, img: member_img, id: req.body.member_id });
+
+        return res.status(200).json({
+            code: 200,
+            message: '성공',
+            
+        });
+
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            code: 500,
+            message: '서버 에러'
+        });
+
+    }
+});
+
 module.exports = router;
