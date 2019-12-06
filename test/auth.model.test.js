@@ -47,10 +47,19 @@ describe('selectPostOne',()=>{
     })
 });
 
-describe.only('selectMemberOne',()=>{
+describe('selectMemberOne',()=>{
     it('member object=>',async ()=>{
         const result = await Member.selectMemberOne({id:2});
         console.log(result);
     })
 });
+
+
+describe.only('updateMemberOne',()=>{
+    it('member object=>',async ()=>{
+        const result = await Member.updateMember({email:'admin', nick: 'admin', img: '', id:2 });
+        console.log(result);
+    })
+});
+
 

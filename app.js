@@ -22,7 +22,9 @@ require('dotenv').config();
 
 const app = express();
 
+
 // view engine setup
+app.set('etag',false);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
