@@ -8,6 +8,7 @@ COPY . /app
 
 RUN npm install
 
+
 ENV NODE_ENV devolopment
 
 EXPOSE 3000 80

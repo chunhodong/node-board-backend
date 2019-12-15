@@ -1,3 +1,4 @@
+/*
 const User = require('../models/user');
 const Post = require('../models/post');
 const Member = require('../models/member');
@@ -53,13 +54,11 @@ describe('selectMemberOne',()=>{
         console.log(result);
     })
 });
-
+*/
 
 describe.only('updateMemberOne',()=>{
-    it('member object=>',async ()=>{
-        const result = await Member.updateMember({email:'admin', nick: 'admin', img: '', id:2 });
-        console.log(result);
-    })
+    
+    console.log('update member mock');
 });
 
 

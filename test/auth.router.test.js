@@ -1,3 +1,4 @@
+/*
 const request = require('supertest');
 const app = require('../app');
 const session = require('supertest-session');
@@ -28,13 +29,7 @@ describe('post /post/create',()=>{
     describe('성공시',()=>{
 
         beforeEach(()=>{
-            /*
-            testSession = session(app,{
-                before:(req)=>{
-                    req.set('token',{token_id:25});
-                },
-            });
-            */
+         
             jest.mock('jsonwebtoken');
             jwt.verify.mockClear();
             jwt.verify.mockReturnValue({id:11});
@@ -54,7 +49,6 @@ describe('post /post/create',()=>{
         afterEach(()=>{
             console.log('after each');
             request(app)
-            //  testSession
   
               .post('/post/delete')
               .send({id:11})
@@ -75,18 +69,11 @@ describe('post /post/readAll',()=>{
     describe('성공시',()=>{
 
         beforeEach(()=>{
-            /*
-            testSession = session(app,{
-                before:(req)=>{
-                    req.set('token',{token_id:25});
-                },
-            });
-            */
+         
             
         });
         it('response=>json token',(done)=>{
             request(app)
-          //  testSession
 
             .get('/post/readAll')
             .end((err,res)=>{
@@ -108,13 +95,7 @@ describe('post /post/readOne',()=>{
     describe('성공시',()=>{
 
         beforeEach(()=>{
-            /*
-            testSession = session(app,{
-                before:(req)=>{
-                    req.set('token',{token_id:25});
-                },
-            });
-            */
+     
             
         });
         it('response=>json token',(done)=>{
@@ -137,13 +118,7 @@ describe.only('get /member/MmeberOne',()=>{
     describe('성공시',()=>{
 
         beforeEach(()=>{
-            /*
-            testSession = session(app,{
-                before:(req)=>{
-                    req.set('token',{token_id:25});
-                },
-            });
-            */
+    
            
            jwt.verify.mockClear();
            jwt.verify.mockReturnValue({id:2});
@@ -163,3 +138,4 @@ describe.only('get /member/MmeberOne',()=>{
         
     });
 });
+*/
