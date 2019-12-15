@@ -27,7 +27,9 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-
+      - run:
+        command: |
+          tar cvf application.tar.gz -C build .
       - save_cache:
           paths:
             - node_modules
