@@ -32,13 +32,3 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: npm test
-
-      - run: tar cvf application.tar.gz -C build .
-      - run: mkdir -p /tmp/artifacts
-      - run: mv application.tar.gz /tmp/artifacts
-       
-      - store_artifacts:
-        path: /tmp/artifacts
