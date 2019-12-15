@@ -35,3 +35,13 @@ jobs:
 
       # run tests!
       - run: npm test
+
+      - run:
+        command: |
+          tar cvf application.tar.gz -C build .
+      - run:
+        command: |
+          mkdir -p /tmp/artifacts
+          mv application.tar.gz /tmp/artifacts
+      - store_artifacts:
+        path: /tmp/artifacts
