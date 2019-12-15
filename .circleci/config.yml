@@ -1,10 +1,20 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
 version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node
+      # specify the version you desire here
+      - image: circleci/node:12.13.1
 
-    working_directory: ~/node:12.13.1
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
 
     steps:
       - checkout
@@ -15,29 +25,22 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-      # Install project dependencies
-      - run: npm install
 
+      - run: npm install
+      
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-  deploy:
-    machine:
-      enabled: true
-    steps:
-      - run:
-          name: Deploy Over SSH
-          command: ssh ubuntu@ec2-15-164-234-81.ap-northeast-2.compute.amazonaws.com "./deploy.sh"
+
+      - run: npm test
+
 
 workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: develop
+    version: 2
+    build-and-depoly:
+      jobs:
+        - build
+
+        
+          
