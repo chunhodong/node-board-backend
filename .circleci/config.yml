@@ -28,7 +28,7 @@ jobs:
     steps:
       - run:
           name: Deploy Over SSH
-          command: ssh ubuntu@ec2-15-164-234-81.ap-northeast-2.compute.amazonaws.com "./depoly.sh"
+          command: ssh ubuntu@ec2-13-125-213-133.ap-northeast-2.compute.amazonaws.com "./depoly.sh"
 
 workflows:
   version: 2
