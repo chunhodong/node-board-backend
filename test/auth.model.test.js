@@ -56,9 +56,12 @@ describe('selectMemberOne',()=>{
 });
 */
 
-describe.only('updateMemberOne',()=>{
+describe('updateMemberOne',()=>{
     
-    console.log('update member mock');
+    it('member test',()=>{
+        console.log('update member mock');
+    
+    });
 });
 
 

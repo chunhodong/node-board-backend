@@ -139,3 +139,12 @@ describe.only('get /member/MmeberOne',()=>{
     });
 });
 */
+
+
+describe('updateMemberOne',()=>{
+    
+    it('member test',()=>{
+        console.log('router test');
+    
+    });
+});
