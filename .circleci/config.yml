@@ -33,7 +33,7 @@ workflows:
       - aws-co/deploy:
           application-name: code-depoly-first-app 
           deployment-group: code-depoly-first-app-depoly
-          service-role-arn: arn:aws:iam::884871223445:role/circleCI-service-role 
+          service-role-arn: arn:aws:iam::901562421220:role/node-backend-codedepoly
           bundle-bucket: samplebucket-s3              
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1} 
 
