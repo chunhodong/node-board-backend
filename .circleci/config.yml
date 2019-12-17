@@ -5,9 +5,9 @@ workflows:
   deploy_application:
     jobs:
       - aws-code-deploy/deploy:
-          application-name: code-depoly-first-app
-          deployment-group: code-depoly-first-app-depoly
-          service-role-arn: arn:aws:iam::901562421220:role/node-backend-codedepoly 
-          bundle-bucket: samplebucket-s3          
+          application-name: node-code-deploy-app
+          deployment-group: node-code-deploy-app-group
+          service-role-arn: arn:aws:iam::901562421220:role/node-CodeDeployRole
+          bundle-bucket: node-circleci-s3          
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
         
