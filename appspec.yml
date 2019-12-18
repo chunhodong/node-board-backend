@@ -1,5 +1,12 @@
 version: 0.0
 os: linux
 files:
+  #S3버킷에서 복사할 파일의 위치
   - source:  /
+    #zip파일을 복사해 압출을 풀 위치
     destination: /home/ubuntu/app
+hooks:
+      # 배포가 끝나면 아래 명령어를 실행
+      AfterInstall: 
+        - location: /home/ubuntu/deploy.sh
+          timeout: 180
