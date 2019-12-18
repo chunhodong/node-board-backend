@@ -5,8 +5,9 @@ files:
   - source:  /
     #zip파일을 복사해 압출을 풀 위치
     destination: /home/ubuntu/app
+
 hooks:
-      # 배포가 끝나면 아래 명령어를 실행
       AfterInstall: 
-        - location: deploy.sh
-          timeout: 180
+        - location: script/deploy.sh
+          timeout: 300
+          runas: root
