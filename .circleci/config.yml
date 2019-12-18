@@ -48,5 +48,5 @@ workflows:
             - build-and-push
           filters:
               branches:
-                only: develo
+                only: master
         
