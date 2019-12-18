@@ -3,7 +3,7 @@ orbs:
   aws-code-deploy-sample: circleci/aws-code-deploy@0.0.9
 
 jobs:
-    build:
+    build-and-push:
       docker:
         # specify the version you desire here
         - image: circleci/node:12.13.1
@@ -37,7 +37,7 @@ jobs:
 workflows:
   deploy_application:
     jobs:
-      
+      - build-and-push
       - aws-code-deploy-sample/deploy:
           application-name: node-code-deploy-app
           deployment-group: node-code-deploy-app-group
@@ -45,5 +45,5 @@ workflows:
           bundle-bucket: node-circleci-s3          
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
           requires:
-            - build-and-push-image
+            - build-and-push
         
