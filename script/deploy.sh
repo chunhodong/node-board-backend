@@ -1,5 +1,2 @@
-echo "Start deploy"
-cd /home/ubuntu/app
-sudo npm install
-sudo npm start
-echo "End deploy"
+#!/bin/bash
+/home/ubuntu/deploy.sh > /dev/null 2> /dev/null < /dev/null &
