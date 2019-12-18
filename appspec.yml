@@ -8,5 +8,5 @@ files:
 hooks:
       # 배포가 끝나면 아래 명령어를 실행
       AfterInstall: 
-        - location: /home/ubuntu/deploy.sh
+        - location: deploy.sh
           timeout: 180
