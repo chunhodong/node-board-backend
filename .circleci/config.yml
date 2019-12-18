@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  aws-code-deploy: circleci/aws-code-deploy@0.0.9
+  aws-code-deploy-sample: circleci/aws-code-deploy@0.0.9
 
 jobs:
     build:
@@ -37,7 +37,7 @@ jobs:
 workflows:
   deploy_application:
     jobs:
-      - aws-code-deploy/deploy:
+      - aws-code-deploy-sample/deploy:
           application-name: node-code-deploy-app
           deployment-group: node-code-deploy-app-group
           service-role-arn: arn:aws:iam::901562421220:role/node-CodeDeployRole
