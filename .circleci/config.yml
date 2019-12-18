@@ -46,4 +46,7 @@ workflows:
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
           requires:
             - build-and-push
+          filters:
+              branches:
+                only: develo
         
