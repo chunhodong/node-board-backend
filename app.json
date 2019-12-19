@@ -1,8 +1,8 @@
 
 {
     "apps" : [{
-            "name" : "PUSH"
-            ,"script" : "./bin/start.js"
+            "name" : "node-backend"
+            ,"script" : "./bin/www"
             ,"instances" : "max"
             ,"exec_mode" : "cluster"
             ,"watch":false
