@@ -3,7 +3,7 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const router = express.Router();
 const { isLoggedIn, isNotLoggedIn,verifyToken} = require('./middlewares');
-const User = require('../models/user');
+const User = require('../models/member');
 const jwt = require('jsonwebtoken');
 
 //회원가입

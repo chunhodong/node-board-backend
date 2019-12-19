@@ -1,6 +1,6 @@
 const KakaoStrategy = require('passport-kakao').Strategy;
 
-const User = require('../models/user');
+const User = require('../models/member');
 const bcrypt = require('bcrypt');
 
 module.exports = (passport) => {

@@ -17,7 +17,7 @@ const createPostOne = async (post) => {
 
 const selectPostAll = async()=>{
     try{
-        const query = "SELECT posts.*,member.nick as nick FROM posts,member WHERE posts.userid = member.id ORDER BY regdate desc";
+        const query = "SELECT posts.*,members.nick as nick FROM posts,members WHERE posts.userid = members.id ORDER BY regdate desc";
         const connection = await db.getConnection(async conn=>conn);
         const [rows] = await connection.query(query);
         connection.release();
@@ -33,7 +33,7 @@ const selectPostAll = async()=>{
 const selectPostOne = async(article) =>{
     try{
 
-        const query = `SELECT posts.*,member.nick as nick FROM posts,member WHERE posts.id = ? AND posts.userid = member.id`;
+        const query = `SELECT posts.*,members.nick as nick FROM posts,members WHERE posts.id = ? AND posts.userid = members.id`;
         const connection = await db.getConnection(async conn=>conn);
         const [rows] = await connection.query(query,[article.articleId])
         connection.release();

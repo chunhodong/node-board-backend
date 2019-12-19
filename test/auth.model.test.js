@@ -1,5 +1,5 @@
 /*
-const User = require('../models/user');
+const User = require('../models/member');
 const Post = require('../models/post');
 const Member = require('../models/member');
 
