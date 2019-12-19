@@ -1,0 +1,10 @@
+
+{
+    "apps" : [{
+            "name" : "PUSH"
+            ,"script" : "./bin/start.js"
+            ,"instances" : "max"
+            ,"exec_mode" : "cluster"
+            ,"watch":false
+    }]
+}
