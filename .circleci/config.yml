@@ -39,8 +39,8 @@ workflows:
     jobs:
       - build-and-push
       - aws-code-deploy-sample/deploy:
-          application-name: node-code-deploy-app
-          deployment-group: node-code-deploy-app-group
+          application-name: node-code-deploy
+          deployment-group: node-code-deploy-group
           service-role-arn: arn:aws:iam::901562421220:role/node-CodeDeployRole
           bundle-bucket: node-circleci-s3          
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
