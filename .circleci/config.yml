@@ -39,9 +39,9 @@ workflows:
       - build-and-push
       - aws-code-deploy/deploy:
           #aws code-deploy설정
-          application-name: api-codedeploy-agent
-          deployment-group: api-codedeploy-agent-group
-          service-role-arn: arn:aws:iam::901562421220:role/aws-code-deploy-role
+          application-name: test-code
+          deployment-group: test-code-agent
+          service-role-arn: arn:aws:iam::901562421220:user/node-code-deploy-iam
           #배포파일(.zip) upload/download위치 (S3위치)
           bundle-bucket: node-api-bucket         
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
