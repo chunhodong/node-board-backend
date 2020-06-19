@@ -2,49 +2,48 @@ version: 2.1
 orbs:
   aws-code-deploy: circleci/aws-code-deploy@0.0.9
 
+
 jobs:
+    #배포진행하기전에 필요한 작업진행(build,test 등등)
     build-and-push:
+      
+      #docker컨테이너에서 작업진행
       docker:
-        # specify the version you desire here
-        - image: circleci/node:12.13.1
+        - image: circleci/node:11.10.0
   
-        # Specify service dependencies here if necessary
-        # CircleCI maintains a library of pre-built images
-        # documented at https://circleci.com/docs/2.0/circleci-images/
-        # - image: circleci/mongo:3.4.4
       working_directory: ~/repo
   
+      #작업순서작성
       steps:
         - checkout
   
-        # Download and cache dependencies
+        # 의존성관련 캐시복구
         - restore_cache:
             keys:
               - v1-dependencies-{{ checksum "package.json" }}
               # fallback to using the latest cache if no exact match is found
               - v1-dependencies-
-  
-  
+        
+        # 의존성관련 캐시저장
         - save_cache:
             paths:
               - node_modules
             key: v1-dependencies-{{ checksum "package.json" }}
 
+        #테스트코드 검증부분
         - run: npm install
-        
+#circleci에서 진행할 work작성        
 workflows:
   deploy_application:
     jobs:
       - build-and-push
       - aws-code-deploy/deploy:
           #aws code-deploy설정
-          application-name: api-codedeploy-agent
-          deployment-group: api-codedeploy-agent-group
-
+          application-name: test-code
+          deployment-group: test-code-agent
           service-role-arn: arn:aws:iam::901562421220:role/aws-code-deploy-role
-
           #배포파일(.zip) upload/download위치 (S3위치)
-          bundle-bucket: node-api-bucket          
+          bundle-bucket: node-api-bucket         
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
           #build-and-push작업이 완료되어야 배포진행
           requires:
