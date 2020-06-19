@@ -38,8 +38,8 @@ workflows:
       - build-and-push
       - aws-code-deploy/deploy:
           #aws code-deploy설정
-          application-name: node-api-code-deploy-app
-          deployment-group: node-api-code-deploy-app-group
+          application-name: api-codedeploy-agent
+          deployment-group: api-codedeploy-agent-group
 
           service-role-arn: arn:aws:iam::901562421220:role/aws-code-deploy-role
 
