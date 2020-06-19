@@ -1,15 +1,11 @@
 const createError = require('http-errors');
 const express = require('express');
-
+const userRouter = require('./routes/user');
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/', pageRouter);
-app.use('/auth', authRouter);
-app.use('/post',postRouter);
-app.use('/member',memberRouter);
-
+app.use('/user', userRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

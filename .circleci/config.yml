@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  aws-code-deploy-sample: circleci/aws-code-deploy@0.0.9
+  aws-code-deploy: circleci/aws-code-deploy@0.0.9
 
 jobs:
     build-and-push:
@@ -12,7 +12,6 @@ jobs:
         # CircleCI maintains a library of pre-built images
         # documented at https://circleci.com/docs/2.0/circleci-images/
         # - image: circleci/mongo:3.4.4
-  
       working_directory: ~/repo
   
       steps:
@@ -25,27 +24,32 @@ jobs:
               # fallback to using the latest cache if no exact match is found
               - v1-dependencies-
   
-        - run: npm install
-        
+  
         - save_cache:
             paths:
               - node_modules
             key: v1-dependencies-{{ checksum "package.json" }}
-  
-        - run: npm test
+
+        - run: npm install
         
 workflows:
   deploy_application:
     jobs:
       - build-and-push
-      - aws-code-deploy-sample/deploy:
-          application-name: node-code-deploy
-          deployment-group: node-code-deploy-group
-          service-role-arn: arn:aws:iam::901562421220:role/node-CodeDeployRole
-          bundle-bucket: node-circleci-s3          
+      - aws-code-deploy/deploy:
+          #aws code-deploy설정
+          application-name: node-api-code-deploy-app
+          deployment-group: node-api-code-deploy-app-group
+
+          service-role-arn: arn:aws:iam::901562421220:role/aws-code-deploy-role
+
+          #배포파일(.zip) upload/download위치 (S3위치)
+          bundle-bucket: node-api-bucket          
           bundle-key: ${CIRCLE_BRANCH}_${CIRCLE_SHA1}
+          #build-and-push작업이 완료되어야 배포진행
           requires:
             - build-and-push
+          #master branch가 push되었을때만 배포
           filters:
               branches:
                 only: master

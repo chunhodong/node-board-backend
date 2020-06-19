@@ -2,10 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/user', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
     try {
  
-
+        return res.status(200).json({
+            code: 200,
+            message: 'server ok'
+        });
 
     } 
     catch (error) {
