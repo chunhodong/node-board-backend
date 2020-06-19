@@ -6,6 +6,15 @@ files:
     #zip파일을 복사해 압출을 풀 위치
     destination: /home/ubuntu/app
 
+permissions:
+  - object: /
+    pattern: "*"
+    owner: ubuntu
+    group: ubuntu
+    type:
+      - directory
+      - file
+
 hooks:
       AfterInstall: 
         - location: script/deploy.sh
