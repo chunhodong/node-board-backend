@@ -1,0 +1,10 @@
+
+{
+    "apps" : [{
+            "name" : "node-backend"
+            ,"script" : "./bin/www"
+            ,"instances" : "max"
+            ,"exec_mode" : "cluster"
+            ,"watch":false
+    }]
+}
