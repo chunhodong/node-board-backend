@@ -1,5 +1,7 @@
 #!/bin/bash 
 
-cd /home/ubuntu/app
+rm -rf /home/ubuntu/app
+
+npm install 
 
 npm start
