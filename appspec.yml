@@ -16,7 +16,7 @@ permissions:
       - file
 
 hooks:
-      BeforeInstall: script/before_install.sh
+      BeforeInstall:
       AfterInstall: 
         - location: script/after_install.sh
           timeout: 600
